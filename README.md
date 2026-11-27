@@ -30,26 +30,27 @@ Classify an IMDB movie review as **positive** or **negative**. The goal is to co
 
 | Model | Accuracy | Precision | Recall | F1 | Training time (s) |
 |---|---|---|---|---|---|
-| Simple RNN | 0.805 | 0.786 | 0.839 | 0.811 | 206 |
-| LSTM | 0.866 | 0.854 | 0.884 | 0.869 | 551 |
-| GRU | 0.846 | 0.825 | 0.879 | 0.851 | 632 |
-| BiLSTM | 0.863 | 0.879 | 0.842 | 0.860 | 851 |
-| **TF-IDF + Logistic Regression** | **0.908** | **0.905** | **0.911** | **0.908** | **37** |
+| Simple RNN | 0.8199 | 0.7772 | 0.8970 | 0.8328 | 60 |
+| LSTM | 0.8605 | 0.8925 | 0.8198 | 0.8546 | 41 |
+| GRU | 0.8607 | 0.8347 | 0.8995 | 0.8659 | 35 |
+| BiLSTM | 0.8630 | 0.8409 | 0.8953 | 0.8673 | 65 |
+| **TF-IDF + Logistic Regression** | **0.9080** | **0.9053** | **0.9112** | **0.9083** | **30** |
 
-_Training times are wall-clock on Google Colab and include different numbers of epochs (EarlyStopping), so they are only indicative._
+_Training times are wall-clock on Google Colab and depend on the hardware (an earlier run took 200-850 s per neural model), so they are only indicative. Neural-network scores vary slightly between runs; the TF-IDF baseline is deterministic._
 
 ## Key findings
 
-- **A simple TF-IDF + Logistic Regression baseline beat every recurrent model** (0.908 accuracy vs 0.866 for the best, LSTM) and trained in about 37 seconds instead of 5-14 minutes. Deep learning was not worth its cost on this task.
-- **LSTM was the best deep model** (F1 0.869), followed closely by BiLSTM (0.860) and GRU (0.851); Simple RNN was clearly weaker (0.811). The gaps among the top three are small and come from a single run.
-- **All deep models overfit quickly:** the best validation loss appeared in epoch 1-2 while training accuracy rose to 95-99%.
-- **Negation is a weak spot:** "The movie was not good and I hated it" was classified as positive by Simple RNN, GRU and BiLSTM; only the LSTM got it right.
-- **Error analysis:** the LSTM misclassified 3,345 of 25,000 test reviews (13.4%), mostly long reviews that mix praise and criticism, or contain many unknown (`<UNK>`) words.
+- **A simple TF-IDF + Logistic Regression baseline beat every recurrent model** (0.908 accuracy vs 0.863 for the best, BiLSTM) at an equal or lower training cost. Deep learning was not worth its complexity on this task.
+- **BiLSTM, GRU and LSTM are practically tied** (accuracy 0.861-0.863); Simple RNN is clearly weaker (0.820). In an earlier run of the same code the ranking among the three differed (LSTM was on top), so differences of one or two points are within run-to-run noise.
+- **All deep models overfit quickly:** the best validation loss appeared in epoch 2-3 while training accuracy rose to 96-98%.
+- **Negation is fragile:** "The movie was not good and I hated it" was classified as positive by Simple RNN and BiLSTM; LSTM and GRU got it right with only 52% and 60% confidence.
+- **Error analysis:** the BiLSTM misclassified 3,426 of 25,000 test reviews (13.7%), mostly long reviews that mix praise and criticism, or contain many unknown (`<UNK>`) words.
 
 ## Lessons learned
 
 - **Padding matters for RNNs.** An earlier run with `post` padding and truncating left Simple RNN and GRU at about 51% accuracy (chance level), because the recurrent state had to cross many padding tokens before the prediction. Switching to `pre` padding/truncating, a longer EarlyStopping patience and a fresh callback per model fixed the training.
 - **Always run a strong classical baseline** before claiming a deep model is better.
+- **Single runs are noisy.** Setting seeds is not enough for fully reproducible GPU training, so close neural models should be compared over several runs.
 - **Overfitting appears fast with embeddings learned from scratch;** regularization or pretrained embeddings would be the next step.
 
 ## Limitations
