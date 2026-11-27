@@ -70,73 +70,88 @@ def contrib_html(items, css_class, max_value):
 # ----------------------------------------------------------------- style
 st.markdown("""
 <style>
-.stApp { background: #f8f4f4; }
-header[data-testid="stHeader"] { background: #1a0a0e; }
-.block-container { padding-top: 2.5rem; padding-bottom: 3rem; max-width: 760px; }
+#MainMenu, footer { visibility: hidden; }
+.stApp { background: #0b0d14; color: #e8eaf0; }
+header[data-testid="stHeader"] { background: transparent; }
+.block-container { padding-top: 2.5rem; padding-bottom: 3rem; max-width: 780px; }
 
 /* sidebar */
-section[data-testid="stSidebar"] > div { background: linear-gradient(180deg, #2a0a10 0%, #4a1019 100%); }
-section[data-testid="stSidebar"] * { color: #f6e9eb; }
-.brand { font-size: 1.05rem; font-weight: 700; letter-spacing: .5px; margin-bottom: 1.6rem; }
+section[data-testid="stSidebar"] > div { background: #10131d; border-right: 1px solid #1f2433; }
+section[data-testid="stSidebar"] * { color: #e8eaf0; }
+.brand { font-size: 1.05rem; font-weight: 800; letter-spacing: 1.5px; color: #f5c518 !important; margin-bottom: 1.2rem; }
 .side-title { font-size: 1rem; font-weight: 700; margin: .4rem 0 .6rem 0; }
-.side-text { font-size: .85rem; line-height: 1.6; color: #e4cdd1; }
-.side-label { font-size: .85rem; font-weight: 700; margin-top: .7rem; }
-.side-value { font-size: .85rem; color: #e4cdd1; margin-bottom: .2rem; }
-.side-hr { border: none; border-top: 1px solid rgba(255,255,255,.12); margin: 1.6rem 0; }
-.side-foot { font-size: .72rem; color: #c9a3a9; margin-top: 2.5rem; }
+.side-text { font-size: .85rem; line-height: 1.6; color: #9aa3b8 !important; }
+.side-label { font-size: .8rem; font-weight: 700; margin-top: .8rem; color: #f5c518 !important; }
+.side-value { font-size: .85rem; color: #c3c9d9 !important; margin-bottom: .2rem; }
+.side-hr { border: none; border-top: 1px solid #1f2433; margin: 1.4rem 0; }
+.side-foot { font-size: .72rem; color: #6b7390 !important; margin-top: 2.5rem; }
 
 /* hero */
-.hero { background: linear-gradient(135deg, #3b0a14 0%, #8b1a2b 60%, #c0392b 100%);
-        border-radius: 18px; padding: 2.2rem 2.2rem 2rem 2.2rem; margin-bottom: 2.2rem;
-        box-shadow: 0 6px 18px rgba(139,26,43,.25); }
-.hero h1 { color: #fff; font-size: 1.9rem; margin: 0 0 1.2rem 0; padding: 0; }
-.hero p { color: #f8e3e6; font-size: .92rem; line-height: 1.6; margin: 0; }
+.hero { background: radial-gradient(circle at top right, #2b2160 0%, #151a2e 55%, #10131d 100%);
+        border: 1px solid #262c44; border-radius: 20px; padding: 2.4rem 2.2rem;
+        margin-bottom: 2.2rem; box-shadow: 0 10px 30px rgba(0,0,0,.45); }
+.hero h1 { font-size: 2.1rem; margin: 0 0 1rem 0; padding: 0; font-weight: 800;
+           background: linear-gradient(90deg, #f5c518, #ff8a4b);
+           -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+.hero p { color: #aab2c8; font-size: .95rem; line-height: 1.7; margin: 0; }
 
-.page-h2 { font-size: 1.8rem; font-weight: 600; color: #2a1519; margin: 1rem 0 1rem 0; }
-.section { font-size: 1.15rem; font-weight: 700; color: #2a1519; margin: 2rem 0 .8rem 0; }
-label p, div[data-testid="stWidgetLabel"] p { color: #4b5568 !important; font-size: .8rem !important; }
-textarea { border-radius: 10px !important; }
+.page-h2 { font-size: 1.7rem; font-weight: 700; color: #ffffff; margin: 1rem 0; }
+.section { font-size: 1.1rem; font-weight: 700; color: #ffffff; margin: 2rem 0 .8rem 0;
+           padding-left: .7rem; border-left: 4px solid #f5c518; }
+label p, div[data-testid="stWidgetLabel"] p { color: #9aa3b8 !important; font-size: .8rem !important; }
+
+/* text area */
+textarea { background: #151a2a !important; color: #e8eaf0 !important;
+           border: 1px solid #2a3150 !important; border-radius: 14px !important; }
+textarea:focus { border-color: #f5c518 !important; box-shadow: 0 0 0 1px #f5c518 !important; }
+textarea::placeholder { color: #6b7390 !important; }
 
 /* buttons */
-div.stButton > button { background: #c0392b; color: #fff; border: none; border-radius: 8px;
-                        padding: .55rem 1.1rem; font-weight: 600; }
-div.stButton > button:hover { background: #a02e22; color: #fff; }
+div.stButton > button { background: #151a2a; color: #e8eaf0; border: 1px solid #2a3150;
+                        border-radius: 12px; padding: .6rem 1.1rem; font-weight: 600;
+                        transition: all .15s ease; }
+div.stButton > button:hover { border-color: #f5c518; color: #f5c518; background: #1a2036; }
+div.stButton > button:active { transform: scale(.98); }
+button[kind="primary"], button[data-testid="stBaseButton-primary"] {
+    background: linear-gradient(90deg, #f5c518, #ff8a4b) !important; color: #11131c !important;
+    border: none !important; font-weight: 800 !important; }
+button[kind="primary"]:hover, button[data-testid="stBaseButton-primary"]:hover {
+    color: #11131c !important; filter: brightness(1.08); }
 
 /* result */
-.result-card { background: #fff; border-radius: 12px; padding: 2rem 1.5rem; text-align: center;
-               box-shadow: 0 2px 10px rgba(139,26,43,.10); border-left: 6px solid #2e9e6a; }
-.result-card.neg { border-left-color: #d9534f; }
-.result-card.unsure { border-left-color: #e0a030; }
-.result-card h3 { margin: 0 0 .8rem 0; font-size: 1.25rem; font-weight: 600; color: #333; }
-.result-card p { margin: 0; color: #4b5568; font-size: .85rem; }
-.metric-card { background: #fff; border-radius: 12px; padding: 1.1rem 1.2rem;
-               box-shadow: 0 2px 10px rgba(139,26,43,.10); }
-.metric-card .lbl { font-size: .75rem; color: #5b6578; }
-.metric-card .val { font-size: 1.7rem; font-weight: 700; color: #2a1519; margin-top: .2rem; }
-.bar-label { font-size: .85rem; font-weight: 700; color: #2a1519; margin: 1.2rem 0 .5rem 0; }
-.bar-track { background: #3a1a20; border-radius: 4px; height: 6px; width: 100%; }
-.bar-fill { background: #e0524a; height: 6px; border-radius: 4px; }
+.result-card { background: #151a2a; border-radius: 16px; padding: 2rem 1.5rem; text-align: center;
+               border: 1px solid #262c44; border-top: 5px solid #2ecc8f;
+               box-shadow: 0 8px 24px rgba(0,0,0,.4); }
+.result-card.neg { border-top-color: #ff5c6c; }
+.result-card.unsure { border-top-color: #f5c518; }
+.result-card h3 { margin: 0 0 .8rem 0; font-size: 1.4rem; font-weight: 700; color: #ffffff; }
+.result-card p { margin: 0; color: #9aa3b8; font-size: .9rem; }
+.metric-card { background: #151a2a; border: 1px solid #262c44; border-radius: 14px; padding: 1.1rem 1.2rem; }
+.metric-card .lbl { font-size: .75rem; color: #8089a3; text-transform: uppercase; letter-spacing: .8px; }
+.metric-card .val { font-size: 1.7rem; font-weight: 800; color: #ffffff; margin-top: .2rem; }
+.bar-label { font-size: .85rem; font-weight: 700; color: #c3c9d9; margin: 1.2rem 0 .5rem 0; }
+.bar-track { background: #1d2338; border-radius: 6px; height: 8px; width: 100%; }
+.bar-fill { height: 8px; border-radius: 6px; }
 
 /* explanation */
-.explain-card { background: #fff; border-radius: 12px; padding: 1rem 1.2rem;
-                box-shadow: 0 2px 10px rgba(139,26,43,.10); }
-.explain-card .t { font-size: .85rem; font-weight: 700; color: #2a1519; margin-bottom: .6rem; }
-.contrib { display: flex; align-items: center; gap: .6rem; margin: .35rem 0; }
-.contrib .w { width: 38%; font-size: .85rem; color: #2a1519; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.cbar { flex: 1; background: #f3e6e8; border-radius: 4px; height: 8px; }
+.explain-card { background: #151a2a; border: 1px solid #262c44; border-radius: 14px; padding: 1rem 1.2rem; }
+.explain-card .t { font-size: .85rem; font-weight: 700; color: #ffffff; margin-bottom: .6rem; }
+.contrib { display: flex; align-items: center; gap: .6rem; margin: .4rem 0; }
+.contrib .w { width: 38%; font-size: .85rem; color: #c3c9d9; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.cbar { flex: 1; background: #1d2338; border-radius: 4px; height: 8px; }
 .cfill { height: 8px; border-radius: 4px; }
-.cfill.pos { background: #2e9e6a; }
-.cfill.neg { background: #d9534f; }
-.empty { font-size: .8rem; color: #7a8497; }
-.note { font-size: .78rem; color: #7a8497; margin-top: 1rem; }
-.footer { text-align: center; color: #7a8497; font-size: .75rem; margin-top: 3rem; }
+.cfill.pos { background: #2ecc8f; }
+.cfill.neg { background: #ff5c6c; }
+.empty { font-size: .8rem; color: #6b7390; }
+.note { font-size: .78rem; color: #6b7390; margin-top: 1rem; line-height: 1.6; }
+.footer { text-align: center; color: #565e78; font-size: .75rem; margin-top: 3rem; }
 </style>
 """, unsafe_allow_html=True)
 
 # --------------------------------------------------------------- sidebar
 with st.sidebar:
     st.markdown(f"""
-    <div class="brand">MOVIE SENTIMENT AI</div>
+    <div class="brand">🎬 MOVIE SENTIMENT AI</div>
     <hr class="side-hr">
     <div class="side-title">About the Project</div>
     <div class="side-text">Classifies a movie review as positive or negative and shows
@@ -177,7 +192,7 @@ for col, (label, text) in zip(cols, EXAMPLES.items()):
 st.markdown('<div class="section">Your review</div>', unsafe_allow_html=True)
 review = st.text_area("Movie review", key="review", height=150,
                       placeholder="Type or paste a movie review here...")
-analyze = st.button("Analyze Review")
+analyze = st.button("Analyze Review", type="primary")
 
 # ---------------------------------------------------------------- result
 if analyze:
@@ -193,7 +208,7 @@ if analyze:
         st.markdown('<div class="page-h2" style="margin-top:2.5rem">Prediction Result</div>',
                     unsafe_allow_html=True)
         if confidence < UNCERTAIN_BELOW:
-            st.markdown("""<div class="result-card unsure"><h3>Uncertain</h3>
+            st.markdown("""<div class="result-card unsure"><h3>Uncertain 🤷</h3>
             <p>The model is not confident: the review looks mixed or neutral.</p></div>""",
                         unsafe_allow_html=True)
         elif pos_p >= 0.5:
@@ -205,12 +220,13 @@ if analyze:
             <p>The model is {neg_p:.0%} confident that this review is negative.</p></div>""",
                         unsafe_allow_html=True)
 
+        st.markdown("<div style='height:1rem'></div>", unsafe_allow_html=True)
         m1, m2 = st.columns(2, gap="medium")
         m1.markdown(f'<div class="metric-card"><div class="lbl">Positive Probability</div>'
                     f'<div class="val">{pos_p:.2%}</div></div>', unsafe_allow_html=True)
         m2.markdown(f'<div class="metric-card"><div class="lbl">Negative Probability</div>'
                     f'<div class="val">{neg_p:.2%}</div></div>', unsafe_allow_html=True)
-        bar_color = "#2e9e6a" if pos_p >= 0.5 else "#d9534f"   # green = positive, red = negative
+        bar_color = "#2ecc8f" if pos_p >= 0.5 else "#ff5c6c"   # green = positive, red = negative
         st.markdown(f'<div class="bar-label">Positive Probability</div>'
                     f'<div class="bar-track"><div class="bar-fill" '
                     f'style="width:{pos_p*100:.1f}%; background:{bar_color}"></div></div>',
