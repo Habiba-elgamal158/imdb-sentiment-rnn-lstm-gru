@@ -4,8 +4,7 @@ A comparison of recurrent neural networks for binary sentiment classification of
 
 [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Habiba-elgamal158/imdb-sentiment-rnn-lstm-gru/blob/main/sentiment_analysis_rnn_lstm_gru.ipynb)
 
-**🔗 Live demo:** _paste your Streamlit link here_
-
+🔗 **Live demo:** [Movie Review Sentiment](https://imdb-sentiment-rnn-lstm-gru-dnncvysym2hddwreougzme.streamlit.app/)
 ## Problem
 
 Classify an IMDB movie review as **positive** or **negative**. The goal is to compare how Simple RNN, LSTM, GRU and Bidirectional LSTM handle long text, and to check whether deep models actually beat a simple linear baseline.
